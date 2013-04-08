@@ -3,7 +3,7 @@ myModel<-function(kk,
                   drug.type = c("ActArea","IC50","EC50"), 
                   model.type = c("ENet","Lasso","Ridge","RF","PCR","PLS","SVM"), 
                   nfolds = 5){
-  require(PredictiveModel_pipelineing)
+  require(PredictiveModeling)
   require(synapseClient)
   synapseLogin("in.sock.jang@sagebase.org","tjsDUD@")
   source("~/PredictiveModel_pipeline/R5/crossValidatePredictiveModel1.R")
@@ -61,7 +61,7 @@ myModel<-function(kk,
   dataSet<-myData_CCLE(data.type,drug.type)
   
   # data preprocessing for preselecting features
-  filteredData<-filterPredictiveModel_pipelineData(dataSet$featureData,dataSet$responseData[,kk,drop=FALSE], featureVarianceThreshold = 0.01, corPValThresh = 0.1)
+  filteredData<-filterPredictiveModelData(dataSet$featureData,dataSet$responseData[,kk,drop=FALSE], featureVarianceThreshold = 0.01, corPValThresh = 0.1)
   
   # filtered feature and response data
   filteredFeatureData  <- filteredData$featureData
