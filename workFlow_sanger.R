@@ -147,7 +147,7 @@ workFlow_all<-function(kk){
       for(k2 in Model.type){
         filename = paste("~/PredictiveModel_IC50/",k1,"/",ko,"/",k2,"/cvDrug_",kk,".Rdata",sep="")
         if(!file.exists(filename)){
-          resultsScale <- myModel(kk,data.type=k1, drug.type = "IC50", model.type = k2, nfolds = 5)    
+          resultsScale <- myModel(kk,data.set = k0,data.type=k1, drug.type = "IC50", model.type = k2, nfolds = 5)    
           save(resultsScale,file = filename)        
         }
       }
@@ -160,6 +160,6 @@ library(multicore)
 library(doMC)
 registerDoMC()
 
-mclapply(1:4, function(x)workFlow_all(x))
+mclapply(1:20, function(x)workFlow_all(x))
 
 
