@@ -145,7 +145,7 @@ workFlow_all<-function(kk){
   for(k0 in Data.set){
     for(k1 in Data.type){
       for(k2 in Model.type){
-        filename = paste("~/PredictiveModel_IC50/",k1,"/",ko,"/",k2,"/cvDrug_",kk,".Rdata",sep="")
+        filename = paste("~/PredictiveModel_IC50/",k1,"/",k0,"/",k2,"/cvDrug_",kk,".Rdata",sep="")
         if(!file.exists(filename)){
           resultsScale <- myModel(kk,data.set = k0,data.type=k1, drug.type = "IC50", model.type = k2, nfolds = 5)    
           save(resultsScale,file = filename)        
