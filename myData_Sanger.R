@@ -1,10 +1,9 @@
-myData_Sanger <- function(data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CMoL","EL","EMoL","ECL","ECMoL")){
+myData_Sanger <- function(data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CMoL","EL","EMoL","ECL","ECMoL"),drug.type = c("ActArea","IC50","EC50")){
   
   library(predictiveModeling)
   library(synapseClient)
   synapseLogin("in.sock.jang@sagebase.org","tjsDUD@")
   
- 
   ###################################################
   #### Load Sanger Molecular Feature Data from Synapse ####
   ###################################################
@@ -24,11 +23,26 @@ myData_Sanger <- function(data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CM
   layer_lineage <- loadEntity(id_lineageLayer)
   eSet_lineage <- layer_lineage$objects$eSet_lineage
   
-  id_drugLayer <- "1742876" 
-  layer_drug <- loadEntity(id_drugLayer)
-  adf_drug <- layer_drug$objects$sangerIC50
   
+  myActArea<-function(){
+    return(adf_drug)
+  }
+  myIC50<-function(){
+    id_drugLayer <- "1742876" 
+    layer_drug <- loadEntity(id_drugLayer)
+    adf_drug <- layer_drug$objects$sangerIC50    
+    return(adf_drug)
+  }
+  myEC50<-function(){
+    return(adf_drug)
+  }
   
+  drug.fun <- match.arg(drug.type)
+  switch(drug.fun, 
+         ActArea = (myfun1 = myActArea),
+         IC50 = (myfun1 = myIC50),
+         EC50 = (myfun1 = myEC50))     
+  adf_drug<-myfun1()
   
   myE <- function(){
     featureData <- createAggregateFeatureDataSet(list(expr = eSet_expr))    
@@ -68,6 +82,8 @@ myData_Sanger <- function(data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CM
   }
   
   
+  
+  
   myEL <- function(){
     featureData <- createAggregateFeatureDataSet(list(expr = eSet_expr,line = eSet_lineage))    
     featureData_filtered <- filterNasFromMatrix(featureData, filterBy = "rows")
@@ -104,7 +120,6 @@ myData_Sanger <- function(data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CM
     dataSets <- createFeatureAndResponseDataList(t(featureData_filtered),adf_drug)
     return(dataSets)
   }
-  
   
   
   data.fun <- match.arg(data.type)
