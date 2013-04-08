@@ -1,4 +1,5 @@
 myModel<-function(kk,
+                  data.set = c("CCLE","Sanger"),
                   data.type = c("Mh","C","CMo","CMh","E","EMo","EMh","EC","ECMo","ECMh","MhL","CL","CMoL","CMhL","EL","EMoL","EMhL","ECL","ECMoL","ECMhL"), 
                   drug.type = c("ActArea","IC50","EC50"), 
                   model.type = c("ENet","Lasso","Ridge","RF","PCR","PLS","SVM"), 
@@ -7,6 +8,15 @@ myModel<-function(kk,
   require(synapseClient)
   synapseLogin("in.sock.jang@sagebase.org","tjsDUD@")
   source("~/PredictiveModel_pipeline/R5/crossValidatePredictiveModel1.R")
+  
+  myCCLE<-function(X,Y){
+    dataSets<-myData_CCLE(X,Y)
+    return(dataSets)
+  }
+  mySanger<-function(X,Y){
+    dataSets<-myData_Sanger(X,Y)
+    return(dataSets)
+  }
   
   myENet<-function(X,Y){
     source("~/PredictiveModel_pipeline/R5/myEnetModel1.R")
@@ -57,8 +67,13 @@ myModel<-function(kk,
          PCR = (myfun = myPCR),
          PLS = (myfun = myPLS))
   
+  set.fun <- match.arg(data.set)
+  switch(set.fun, 
+         CCLE = (myfun2 = myCCLE),
+         Sanger = (myfun2 = mySanger))
+         
   
-  dataSet<-myData_CCLE(data.type,drug.type)
+  dataSet<-myfun2(data.type,drug.type)
   
   # data preprocessing for preselecting features
   filteredData<-filterPredictiveModelData(dataSet$featureData,dataSet$responseData[,kk,drop=FALSE], featureVarianceThreshold = 0.01, corPValThresh = 0.1)
