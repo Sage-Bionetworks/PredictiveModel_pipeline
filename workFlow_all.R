@@ -219,8 +219,8 @@ system("mkdir ~/PredictiveModel_ActArea/ECMoL/CCLE/Lasso")
 
 
 workFlow_all<-function(kk){
-  source("~/PredictiveModel_ActArea/myModel.R")
-  source("~/PredictiveModel_ActArea/myData_CCLE.R")
+  source("~/PredictiveModel_pipeline/myModel.R")
+  source("~/PredictiveModel_pipeline/myData_CCLE.R")
   require(pls)  
   require(kernlab)
   require(synapseClient)
