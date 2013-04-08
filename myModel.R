@@ -3,41 +3,41 @@ myModel<-function(kk,
                   drug.type = c("ActArea","IC50","EC50"), 
                   model.type = c("ENet","Lasso","Ridge","RF","PCR","PLS","SVM"), 
                   nfolds = 5){
-  require(predictiveModeling)
+  require(PredictiveModel_pipelineing)
   require(synapseClient)
   synapseLogin("in.sock.jang@sagebase.org","tjsDUD@")
-  source("~/PredictiveModel/R5/crossValidatePredictiveModel1.R")
+  source("~/PredictiveModel_pipeline/R5/crossValidatePredictiveModel1.R")
   
   myENet<-function(X,Y){
-    source("~/PredictiveModel/R5/myEnetModel1.R")
+    source("~/PredictiveModel_pipeline/R5/myEnetModel1.R")
     alphas =unique(createENetTuneGrid()[,1])    
     CV<-crossValidatePredictiveModel1(X, Y, model = myEnetModel1$new(), alpha = alphas, numFolds = nfolds)
     return(CV)
   }
   myLasso<-function(X,Y){
-    source("~/PredictiveModel/R5/myEnetModel1.R")    
+    source("~/PredictiveModel_pipeline/R5/myEnetModel1.R")    
     CV<-crossValidatePredictiveModel1(X, Y, model = myEnetModel1$new(), alpha = 1, numFolds = nfolds)
     return(CV)
   }
   myRidge<-function(X,Y){
-    source("~/PredictiveModel/R5/myEnetModel1.R")    
+    source("~/PredictiveModel_pipeline/R5/myEnetModel1.R")    
     CV<-crossValidatePredictiveModel1(X, Y, model = myEnetModel1$new(), alpha = 10^-10, numFolds = nfolds)
     return(CV)
   }
   myRF<-function(X,Y){
-    source("~/PredictiveModel/R5/myRandomForestModel1.R")    
+    source("~/PredictiveModel_pipeline/R5/myRandomForestModel1.R")    
     CV<-crossValidatePredictiveModel1(X, Y, model = myRandomForestModel1$new(), ntree = 500)
     return(CV)
   }
   myPCR<-function(X,Y){
     require(pls)
-    source("~/PredictiveModel/R5/myPcrModel1.R")    
+    source("~/PredictiveModel_pipeline/R5/myPcrModel1.R")    
     CV<-crossValidatePredictiveModel1(X, Y, model = myPcrModel1$new(), ncomp=10)
     return(CV)
   }
   myPLS<-function(X,Y){
     require(pls)
-    source("~/PredictiveModel/R5/myPlsModel1.R")    
+    source("~/PredictiveModel_pipeline/R5/myPlsModel1.R")    
     CV<-crossValidatePredictiveModel1(X, Y, model = myPlsModel1$new(), ncomp=10)
     return(CV)
   }
@@ -61,7 +61,7 @@ myModel<-function(kk,
   dataSet<-myData_CCLE(data.type,drug.type)
   
   # data preprocessing for preselecting features
-  filteredData<-filterPredictiveModelData(dataSet$featureData,dataSet$responseData[,kk,drop=FALSE], featureVarianceThreshold = 0.01, corPValThresh = 0.1)
+  filteredData<-filterPredictiveModel_pipelineData(dataSet$featureData,dataSet$responseData[,kk,drop=FALSE], featureVarianceThreshold = 0.01, corPValThresh = 0.1)
   
   # filtered feature and response data
   filteredFeatureData  <- filteredData$featureData

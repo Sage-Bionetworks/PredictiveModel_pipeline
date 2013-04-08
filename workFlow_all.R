@@ -243,6 +243,6 @@ library(multicore)
 library(doMC)
 registerDoMC()
 
-mclapply(1:8, function(x) workFlow_all(x))
+mclapply(1:4, function(x)workFlow_all(x))
 
 
