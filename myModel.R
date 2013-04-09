@@ -4,13 +4,13 @@ myModel<-function(kk,
                   drug.type = c("ActArea","IC50","EC50"), 
                   model.type = c("ENet","Lasso","Ridge","RF","PCR","PLS","SVM"), 
                   nfolds = 5){
-  require(PredictiveModeling)
+  require(predictiveModeling)
   require(synapseClient)
   synapseLogin("in.sock.jang@sagebase.org","tjsDUD@")
   source("~/PredictiveModel_pipeline/R5/crossValidatePredictiveModel1.R")
   
   myCCLE<-function(X,Y){
-    dataSets<-myData_CCLE(X,Y)
+    dataSets<-myData_CCLE_new(X,Y)
     return(dataSets)
   }
   mySanger<-function(X,Y){

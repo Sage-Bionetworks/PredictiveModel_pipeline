@@ -224,13 +224,13 @@ workFlow_all<-function(kk){
   require(pls)  
   require(kernlab)
   require(synapseClient)
-  Drug.type = c("ActArea","EC50","IC50")
+  Drug.type = c("ActArea")#,"EC50","IC50")
   Data.type = c("Mh","C","CMo","CMh","E","EMo","EMh","EC","ECMo","ECMh","MhL","CL","CMoL","CMhL","EL","EMoL","EMhL","ECL","ECMoL","ECMhL")  
-  Model.type = c("PCR","PLS","Ridge","Lasso","RF","SVM","ENet")
+  Model.type = c("PCR")#,"PLS","Ridge","Lasso","RF","SVM","ENet")
   for(k0 in Drug.type){
     for(k1 in Data.type){
       for(k2 in Model.type){
-        filename = paste("~/PredictiveModel_",k0,"/",k1,"/CCLE/",k2,"/cvDrug_",kk,".Rdata",sep="")
+        filename = paste("~/newPredictiveModel_",k0,"/",k1,"/CCLE/",k2,"/cvDrug_",kk,".Rdata",sep="")
         if(!file.exists(filename)){
           resultsScale <- myModel(kk,data.type=k1, drug.type = k0, model.type = k2, nfolds = 5)    
           save(resultsScale,file = filename)        
@@ -242,9 +242,6 @@ workFlow_all<-function(kk){
 
 
 library(multicore)
-library(doMC)
-registerDoMC()
-
 mclapply(1:4, function(x)workFlow_all(x))
 
 
