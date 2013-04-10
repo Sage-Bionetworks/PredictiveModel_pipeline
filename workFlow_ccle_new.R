@@ -232,7 +232,7 @@ workFlow_all<-function(kk){
       for(k2 in Model.type){
         filename = paste("~/newPredictiveModel_",k0,"/",k1,"/CCLE/",k2,"/cvDrug_",kk,".Rdata",sep="")
         if(!file.exists(filename)){
-          resultsScale <- myModel(kk,data.type=k1, drug.type = k0, model.type = k2, nfolds = 5)    
+          resultsScale <- myModel(kk,data.set = "CCLE",data.type=k1, drug.type = k0, model.type = k2, nfolds = 5)    
           save(resultsScale,file = filename)        
         }
       }
@@ -242,6 +242,6 @@ workFlow_all<-function(kk){
 
 
 library(multicore)
-mclapply(1:4, function(x)workFlow_all(x))
+mclapply(5:24, function(x)workFlow_all(x))
 
 
