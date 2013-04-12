@@ -5,19 +5,19 @@ myData_CCLE_new <- function(data.type = c("Mh","C","CMo","CMh","E","EMo","EMh","
   synapseLogin("in.sock.jang@sagebase.org","tjsDUD@")
   
   #### Load CCLE Molecular Feature Data from Synapse ####    
-  id_exprLayer <- "1757082" 
+  id_exprLayer <- "syn1757082" 
   layer_expr <- loadEntity(id_exprLayer)
   eSet_expr <- layer_expr$objects$eSet_expr
   
-  id_copyLayer <- "1757086"     
+  id_copyLayer <- "syn1757086"     
   layer_copy <- loadEntity(id_copyLayer)
   eSet_copy <- layer_copy$objects$eSet_copy
   
-  id_hybridLayer <-  "1757084" 
+  id_hybridLayer <-  "syn1757084" 
   layer_hybrid <- loadEntity(id_hybridLayer)
   eSet_hybrid <- layer_hybrid$objects$eSet_hybrid
   
-  id_oncomapLayer <- "1757186"  
+  id_oncomapLayer <- "syn1757186"  
   layer_oncomap <- loadEntity(id_oncomapLayer)
   eSet_oncomap <- layer_oncomap$objects$eSet_oncomap
   
