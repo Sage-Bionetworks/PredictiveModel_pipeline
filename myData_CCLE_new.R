@@ -26,19 +26,19 @@ myData_CCLE_new <- function(data.type = c("Mh","C","CMo","CMh","E","EMo","EMh","
   eSet_lineage <- layer_lineage$objects$eSet_lineage
   
   myActArea<-function(){
-    id_drugLayer <- "syn1744787" 
+    id_drugLayer <- "syn1757049" 
     layer_drug <- loadEntity(id_drugLayer)
     adf_drug <- layer_drug$objects$drugCCLE_ActArea
     return(adf_drug)
   }
   myIC50<-function(){
-    id_drugLayer <- "syn1744783" 
+    id_drugLayer <- "syn1757045" 
     layer_drug <- loadEntity(id_drugLayer)
     adf_drug <- layer_drug$objects$drugCCLE_IC50
     return(adf_drug)
   }
   myEC50<-function(){
-    id_drugLayer <- "syn1744785" 
+    id_drugLayer <- "syn1757047" 
     layer_drug <- loadEntity(id_drugLayer)
     adf_drug <- layer_drug$objects$drugCCLE_EC50
     return(adf_drug)
