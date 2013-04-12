@@ -5,19 +5,19 @@ myData_CCLE_new <- function(data.type = c("Mh","C","CMo","CMh","E","EMo","EMh","
   synapseLogin("in.sock.jang@sagebase.org","tjsDUD@")
   
   #### Load CCLE Molecular Feature Data from Synapse ####    
-  id_exprLayer <- "syn1744779" 
+  id_exprLayer <- "1757082" 
   layer_expr <- loadEntity(id_exprLayer)
   eSet_expr <- layer_expr$objects$eSet_expr
   
-  id_copyLayer <- "syn1744777"     
+  id_copyLayer <- "1757086"     
   layer_copy <- loadEntity(id_copyLayer)
   eSet_copy <- layer_copy$objects$eSet_copy
   
-  id_hybridLayer <-  "syn1744781" 
+  id_hybridLayer <-  "1757084" 
   layer_hybrid <- loadEntity(id_hybridLayer)
   eSet_hybrid <- layer_hybrid$objects$eSet_hybrid
   
-  id_oncomapLayer <- "syn1744844"  
+  id_oncomapLayer <- "1757186"  
   layer_oncomap <- loadEntity(id_oncomapLayer)
   eSet_oncomap <- layer_oncomap$objects$eSet_oncomap
   
@@ -26,19 +26,19 @@ myData_CCLE_new <- function(data.type = c("Mh","C","CMo","CMh","E","EMo","EMh","
   eSet_lineage <- layer_lineage$objects$eSet_lineage
   
   myActArea<-function(){
-    id_drugLayer <- "syn1757049" 
+    id_drugLayer <- "syn1757078" 
     layer_drug <- loadEntity(id_drugLayer)
     adf_drug <- layer_drug$objects$drugCCLE_ActArea
     return(adf_drug)
   }
   myIC50<-function(){
-    id_drugLayer <- "syn1757045" 
+    id_drugLayer <- "syn1757074" 
     layer_drug <- loadEntity(id_drugLayer)
     adf_drug <- layer_drug$objects$drugCCLE_IC50
     return(adf_drug)
   }
   myEC50<-function(){
-    id_drugLayer <- "syn1757047" 
+    id_drugLayer <- "syn1757076" 
     layer_drug <- loadEntity(id_drugLayer)
     adf_drug <- layer_drug$objects$drugCCLE_EC50
     return(adf_drug)
