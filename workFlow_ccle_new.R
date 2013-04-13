@@ -218,6 +218,8 @@ system("mkdir ~/newPredictiveModel_ActArea/ECMoL/CCLE/Ridge")
 system("mkdir ~/newPredictiveModel_ActArea/ECMoL/CCLE/Lasso")
 
 
+
+
 workFlow_all<-function(kk){
   source("~/PredictiveModel_pipeline/myModel.R")
   source("~/PredictiveModel_pipeline/myData_CCLE_new.R")
@@ -248,38 +250,5 @@ mat<-matrix(kk,nrow=4)
 for(k in 1:ncol(mat)){
   mclapply(mat[,k], function(x)workFlow_all(x))  
 }
-
-
-
-workFlow_all<-function(kk){
-  source("~/PredictiveModel_pipeline/myModel.R")
-  source("~/PredictiveModel_pipeline/myData_CCLE_new.R")
-  require(pls)  
-  require(kernlab)
-  require(synapseClient)
-  Drug.type = c("ActArea")#,"ActArea")
-  Data.type = c("Mh","C","CMo","CMh","E","EMo","EMh","EC","ECMo","ECMh","MhL","CL","CMoL","CMhL","EL","EMoL","EMhL","ECL","ECMoL","ECMhL")  
-  Model.type = c("PCR","PLS","Ridge","Lasso","RF","SVM","ENet")
-  for(k0 in Drug.type){
-    for(k1 in Data.type){
-      for(k2 in Model.type){
-        filename = paste("~/newPredictiveModel_",k0,"/",k1,"/CCLE/",k2,"/cvDrug_",kk,".Rdata",sep="")
-        if(!file.exists(filename)){
-          resultsScale <- myModel(kk,data.set = "CCLE",data.type=k1, drug.type = k0, model.type = k2, nfolds = 5)    
-          save(resultsScale,file = filename)        
-        }
-      }
-    }  
-  }
-}
-
-
-library(multicore)
-<<<<<<< HEAD
-
-mclapply(1:4, function(x)workFlow_all(x))
-=======
-mclapply(5:24, function(x)workFlow_all(x))
->>>>>>> 1395676b46c29103b6e61a315fc1605bf91c848c
 
 
