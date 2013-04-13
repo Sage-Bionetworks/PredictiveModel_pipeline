@@ -132,34 +132,36 @@ system("mkdir ~/PredictiveModel_IC50/ECMoL/Sanger/Ridge")
 system("mkdir ~/PredictiveModel_IC50/ECMoL/Sanger/Lasso")
 
 
+
 workFlow_all<-function(kk){
   source("~/PredictiveModel_pipeline/myModel.R")
-  source("~/PredictiveModel_pipeline/myData_CCLE.R")
   source("~/PredictiveModel_pipeline/myData_Sanger.R")
   require(pls)  
   require(kernlab)
   require(synapseClient)
-  Data.set = c("Sanger")
+  Drug.type = c("IC50")#,"ActArea","ActArea")
   Data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CMoL","EL","EMoL","ECL","ECMoL")  
   Model.type = c("PCR","PLS","Ridge","Lasso","RF","SVM","ENet")
-  for(k0 in Data.set){
-    for(k1 in Data.type){
-      for(k2 in Model.type){
-        filename = paste("~/PredictiveModel_IC50/",k1,"/",k0,"/",k2,"/cvDrug_",kk,".Rdata",sep="")
-        if(!file.exists(filename)){
-          resultsScale <- myModel(kk,data.set = k0,data.type=k1, drug.type = "IC50", model.type = k2, nfolds = 5)    
-          save(resultsScale,file = filename)        
-        }
-      }
-    }  
+  
+  k1 <- rep(rep(1:length(Model.type), each=20), length(Data.type))
+  k2 <- rep(1:length(Data.type), each=length(Model.type)*20)
+  k3 <- rep(1:20, length(Data.type)*length(Model.type))
+  
+  filename = paste("~/PredictiveModel_",Drug.type,"/",Data.type[k2[kk]],"/Sanger/",Model.type[k1[kk]],"/cvDrug_",k3[kk],".Rdata",sep="")
+  
+  if(!file.exists(filename)){
+    resultsScale <- myModel(k3[kk],data.set = "Sanger",data.type=Data.type[k2[kk]], drug.type = "IC50", model.type = Model.type[k1[kk]], nfolds = 5)    
+    save(resultsScale,file = filename)        
   }
+  
 }
 
 
 library(multicore)
-library(doMC)
-registerDoMC()
-
-mclapply(1:20, function(x)workFlow_all(x))
+kk<-1:(12*7*20)
+mat<-matrix(kk,nrow=4)
+for(k in 1:ncol(mat)){
+  mclapply(mat[,k], function(x)workFlow_all(x))  
+}
 
 
