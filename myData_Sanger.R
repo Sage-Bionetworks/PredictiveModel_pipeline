@@ -25,6 +25,9 @@ myData_Sanger <- function(data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CM
   
   
   myActArea<-function(){
+    id_drugLayer <- "syn1807986" 
+    layer_drug <- loadEntity(id_drugLayer)
+    adf_drug <- layer_drug$objects$sangerAUC
     return(adf_drug)
   }
   myIC50<-function(){
