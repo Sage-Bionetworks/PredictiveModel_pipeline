@@ -138,7 +138,7 @@ Model.type = c("PCR","PLS","Ridge","Lasso","RF","SVM","ENet")
 
 k1 <- rep(rep(1:length(Model.type), each=10), length(Data.type))
 k2 <- rep(1:length(Data.type), each=length(Model.type)*10)
-k3 <- rep(1:10, length(Data.type)*length(Model.type))
+k3 <- rep(11:20, length(Data.type)*length(Model.type))
 
 
 workFlow_all<-function(kk){
@@ -156,7 +156,7 @@ workFlow_all<-function(kk){
 
 
 KK<-c()
-for(kk in 1:(24*3)){  
+for(kk in 1:length(k3)){  
   filename = paste("~/newPredictiveModel_",Drug.type,"/",Data.type[k2[kk]],"/Sanger/",Model.type[k1[kk]],"/cvDrug_",k3[kk],".Rdata",sep="")  
   if(!file.exists(filename)){
     KK<-c(KK,kk)    
