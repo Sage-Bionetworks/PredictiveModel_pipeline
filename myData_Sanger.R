@@ -11,7 +11,7 @@ myData_Sanger <- function(data.type = c("C","CMo","E","EMo","EC","ECMo","CL","CM
   layer_copy <- loadEntity(id_copyLayer)
   eSet_copy <- layer_copy$objects$eSet_copy
   
-  id_oncomapLayer <- "1742882"  
+  id_oncomapLayer <- "syn1742882"  
   layer_oncomap <- loadEntity(id_oncomapLayer)
   eSet_oncomap <- layer_oncomap$objects$eSet_oncomap
   

@@ -1,6 +1,4 @@
 require(randomForest)
-require(modeest)
-
 myRandomForestModel1 <- setRefClass(Class = "myRandomForestModel1",
                                    contains="PredictiveModel",
                                    fields="model",
@@ -13,8 +11,12 @@ myRandomForestModel1 <- setRefClass(Class = "myRandomForestModel1",
                                        return(.self$model)
                                      },
                                      
-                                     customTrain = function(featureData, responseData,ntree = 50,...){                                                                  
-                                       .self$model <- randomForest(featureData, responseData, ntree = ntree, do.trace = 5,...)
+                                     customTrain = function(featureData, responseData,ntree = 500,...){ 
+                                       K<-which(!is.na(responseData))
+                                       FeatureData<-featureData[K,]
+                                       ResponseData<-responseData[K]
+                                       
+                                       .self$model <- randomForest(FeatureData, ResponseData, ntree = ntree,...)
                                      },
                                      
                                      customPredict = function(featureData){
